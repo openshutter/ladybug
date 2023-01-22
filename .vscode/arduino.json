@@ -1,0 +1,6 @@
+{
+    "sketch": "firmware/ladybug/ladybug.ino",
+    "port": "/dev/ttyACM0",
+    "board": "Seeeduino:nrf52:xiaonRF52840",
+    "configuration": "softdevice=s140v6,debug=l0"
+}

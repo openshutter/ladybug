@@ -1,0 +1,26 @@
+{
+  "cSpell.words": [
+    "Freie",
+    "gpio",
+    "HICHG",
+    "Martine",
+    "MOSI",
+    "QSPI",
+    "SCLK",
+    "Seeedstudio",
+    "Seeeduino",
+    "Universität",
+    "VBAT",
+    "xiao"
+  ],
+  "files.associations": {
+    "*.env": "shellscript",
+    "Makefile.*": "makefile",
+    "*.mk": "makefile",
+    "board.h": "c",
+    "shell.h": "c",
+    "testgpio.h": "c",
+    "tuple": "c"
+  },
+  "files.insertFinalNewline": true
+}

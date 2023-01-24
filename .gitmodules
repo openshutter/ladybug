@@ -1,0 +1,3 @@
+[submodule "firmware/riot"]
+	path = firmware/RIOT
+	url = git@github.com:RIOT-OS/RIOT.git

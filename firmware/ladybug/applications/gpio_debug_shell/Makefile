@@ -37,7 +37,7 @@ USEMODULE += ps
 USEMODULE += saul_default
 
 # our testgpio commands
-USEMODULE += testgpio
+USEMODULE += shell_gpio
 
 include $(RIOTBASE)/tests/Makefile.boards.netif
 ifneq (,$(filter $(BOARD),$(BOARD_PROVIDES_NETIF)))

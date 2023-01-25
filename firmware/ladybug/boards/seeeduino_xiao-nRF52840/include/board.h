@@ -23,6 +23,7 @@
   #include "board_common.h"
   #include "cpu.h"
   #include "periph/gpio.h"
+  #include "periph/adc.h"
 
   #ifdef __cplusplus
 extern "C" {
@@ -47,12 +48,11 @@ extern "C" {
   #define PIN_D10 GPIO_PIN(1, 15)    // D10 is P1.15 (MOSI)
 
   // A0 .. A5
-  #define PIN_A1    PIN_D1
-  #define PIN_A2    PIN_D2
-  #define PIN_A3    PIN_D3
-  #define PIN_A4    PIN_D4
-  #define PIN_A5    PIN_D5
-
+  #define PIN_A1 PIN_D1
+  #define PIN_A2 PIN_D2
+  #define PIN_A3 PIN_D3
+  #define PIN_A4 PIN_D4
+  #define PIN_A5 PIN_D5
 
   // i2c/spi/uart
   #define PIN_SDA     PIN_D4
@@ -105,7 +105,7 @@ extern "C" {
   #define PIN_NFC2 PIN_D31
 
   // VBAT
-  #define PIN_D32  GPIO_PIN(0, 10),    // D32 is P0.10 (VBAT)
+  #define PIN_D32  GPIO_PIN(0, 10)    // D32 is P0.10 (VBAT)
   #define PIN_VBAT PIN_D32
 
 /** @} */

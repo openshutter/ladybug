@@ -20,7 +20,9 @@
     "board.h": "c",
     "shell.h": "c",
     "testgpio.h": "c",
-    "tuple": "c"
+    "tuple": "c",
+    "typeinfo": "c",
+    "adc.h": "c"
   },
   "files.insertFinalNewline": true
 }

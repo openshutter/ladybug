@@ -17,6 +17,9 @@
  * @author      Martine S. Lenders <m.lenders@fu-berlin.de>
  */
 
+
+// MODULE_ZTIMER_EXTEND
+
 #ifndef BOARD_H
   #define BOARD_H
 

@@ -1,3 +1,6 @@
+RIOTBASE ?= $(CURDIR)/../../../../RIOT
+RIOTBOARD ?= $(RIOTBASE)/boards
+
 PROGRAMMER ?= uf2conv
 
 UF2CONV_FLAGS = -f 0xADA52840

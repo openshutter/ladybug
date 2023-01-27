@@ -1,4 +1,9 @@
+RIOTBASE ?= $(CURDIR)/../../../../RIOT
+RIOTBOARD ?= $(RIOTBASE)/boards
+
 CPU_MODEL = nrf52840xxaa
+
+FEATURES_PROVIDED = xiao_nRF52840_pins
 
 # Put defined MCU peripherals here (in alphabetical order)
 FEATURES_PROVIDED += periph_i2c

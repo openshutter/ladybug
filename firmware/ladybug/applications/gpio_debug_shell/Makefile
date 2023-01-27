@@ -1,3 +1,4 @@
+
 # name of your application
 APPLICATION = gpio_debug_shell
 
@@ -29,48 +30,36 @@ DEVELHELP ?= 1
 # Change this to 0 show compiler invocation lines by default:
 QUIET ?= 1
 
+FEATURES_REQUIRED += cpp
+
+# our board pins
+FEATURES_REQUIRED += xiao_nRF52840_pins
+
 # Modules to include:
 USEMODULE += shell
 USEMODULE += shell_cmds_default
 USEMODULE += ps
+USEMODULE += random
 # include and auto-initialize all available sensors
 USEMODULE += saul_default
 
-# our testgpio commands
+# shell test commands
 USEMODULE += shell_gpio
+USEMODULE += shell_adc
+USEMODULE += shell_battery
+USEMODULE += shell_discomode
 
-include $(RIOTBASE)/tests/Makefile.boards.netif
-ifneq (,$(filter $(BOARD),$(BOARD_PROVIDES_NETIF)))
-  # Use modules for networking
-  # gnrc is a meta module including all required, basic gnrc networking modules
-  USEMODULE += gnrc
-  # use the default network interface for the board
-  USEMODULE += netdev_default
-  # automatically initialize the network interface
-  USEMODULE += auto_init_gnrc_netif
-  # shell command to send L2 packets with a simple string
-  USEMODULE += gnrc_txtsnd
-  # the application dumps received packets to stdout
-  USEMODULE += gnrc_pktdump
-endif
+# application components
+USEMODULE += ladybug_triggers
 
-FEATURES_OPTIONAL += periph_rtc
 
-ifneq (,$(filter msba2,$(BOARD)))
-  USEMODULE += mci
-  USEMODULE += random
-endif
+# FEATURES_REQUIRED += periph_rtt
+# FEATURES_REQUIRED += periph_timer
+# FEATURES_REQUIRED += periph_gpio
+# FEATURES_REQUIRED += periph_adc
+# FEATURES_REQUIRED += periph_timer
 
 include $(RIOTBASE)/Makefile.include
-
-ifneq (,$(filter $(BOARD),$(BOARD_PROVIDES_NETIF)))
-  # We use only the lower layers of the GNRC network stack, hence, we can
-  # reduce the size of the packet buffer a bit
-  # Set GNRC_PKTBUF_SIZE via CFLAGS if not being set via Kconfig.
-  ifndef CONFIG_GNRC_PKTBUF_SIZE
-    CFLAGS += -DCONFIG_GNRC_PKTBUF_SIZE=512
-  endif
-endif
 
 # Set a custom channel if needed
 include $(RIOTMAKE)/default-radio-settings.inc.mk

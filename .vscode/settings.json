@@ -11,7 +11,8 @@
     "Seeeduino",
     "Universität",
     "VBAT",
-    "xiao"
+    "xiao",
+    "ZTIMER"
   ],
   "files.associations": {
     "*.env": "shellscript",
@@ -22,7 +23,18 @@
     "testgpio.h": "c",
     "tuple": "c",
     "typeinfo": "c",
-    "adc.h": "c"
+    "adc.h": "c",
+    "thread.h": "c",
+    "ztimer.h": "c",
+    "board_common.h": "c",
+    "algorithm": "c",
+    "string.h": "c",
+    "periph_conf.h": "c",
+    "gpio.h": "c",
+    "timex.h": "c",
+    "periodic.h": "c",
+    "periph_rtt.h": "c",
+    "config.h": "c"
   },
   "files.insertFinalNewline": true
 }

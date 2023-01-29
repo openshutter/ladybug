@@ -41,7 +41,6 @@ GPIOPIN gpioTable[] = {
   { "D3", PIN_D3 },       // D3  is P0.29 (A3)
   { "D30", PIN_D30 },     // D30 is P0.09 (NFC1)
   { "D31", PIN_D31 },     // D31 is P0.10 (NFC2)
-  { "D32", PIN_D32 },     // D32 is P0.10 (VBAT)
   { "D4", PIN_D4 },       // D4  is P0.04 (A4,SDA)
   { "D5", PIN_D5 },       // D5  is P0.05 (A5,SCL)
   { "D6", PIN_D6 },       // D6  is P1.11 (TX)

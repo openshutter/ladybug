@@ -1,0 +1,1 @@
+USEMODULE_INCLUDES += $(CURDIR)/../../../ladybug/modules/ladybug_triggers

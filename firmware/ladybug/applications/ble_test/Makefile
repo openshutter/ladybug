@@ -1,14 +1,24 @@
 
 # name of your application
-APPLICATION = gpio_debug_shell
+APPLICATION = ble_test
 
 # If no BOARD is found in the environment, use this default:
-BOARD ?= native
+BOARD = seeeduino_xiao-nRF52840
 
 # This has to be the absolute path to the RIOT base directory:
-RIOTBASE ?= $(CURDIR)/../../../RIOT
-EXTERNAL_BOARD_DIRS ?= $(CURDIR)/../../../ladybug/boards
-EXTERNAL_MODULE_DIRS ?= $(CURDIR)/../../../ladybug/modules
+RIOTBASE := $(CURDIR)/../../../RIOT
+LADYBUGDIR := $(CURDIR)/../../../ladybug
+EXTERNAL_BOARD_DIRS += $(LADYBUGDIR)/boards
+EXTERNAL_MODULE_DIRS += $(LADYBUGDIR)/modules
+
+# Bluetooth device info
+# Passed through via ladybug_ble.h
+CFLAGS += -DCONFIG_NIMBLE_AUTOADV_DEVICE_NAME='"Openshutter Ladybug v0.1"'
+CFLAGS += -DCONFIG_DEVINFO_MANUFACTURER_NAME='"Openshutter"'
+CFLAGS += -DCONFIG_DEVINFO_MODEL_NUMBER='"Ladybug"'
+CFLAGS += -DCONFIG_DEVINFO_SERIAL_NUMBER='"0001-A"'
+CFLAGS += -DCONFIG_DEVINFO_FW_VER='"v0.1"'
+CFLAGS += -DCONFIG_DEVINFO_HW_VER='"v0.1"'
 
 # Uncomment these lines if you want to use platform support from external
 # repositories:
@@ -30,11 +40,6 @@ DEVELHELP ?= 1
 # Change this to 0 show compiler invocation lines by default:
 QUIET ?= 1
 
-FEATURES_REQUIRED += cpp
-
-# our board pins
-FEATURES_REQUIRED += xiao_nRF52840_pins
-
 # Modules to include:
 USEMODULE += shell
 USEMODULE += shell_cmds_default
@@ -43,21 +48,28 @@ USEMODULE += random
 # include and auto-initialize all available sensors
 USEMODULE += saul_default
 
+
 # shell test commands
 USEMODULE += shell_gpio
 USEMODULE += shell_adc
-USEMODULE += shell_battery
+
 USEMODULE += shell_discomode
 
-# application components
+USEMODULE += ladybug_ble
 USEMODULE += ladybug_triggers
+USEMODULE += ladybug_battery
 
+# we're using cpp in a few spots
+FEATURES_REQUIRED += cpp
 
-# FEATURES_REQUIRED += periph_rtt
-# FEATURES_REQUIRED += periph_timer
-# FEATURES_REQUIRED += periph_gpio
-# FEATURES_REQUIRED += periph_adc
-# FEATURES_REQUIRED += periph_timer
+# required for ztimer to work
+# it should pull this in on its own
+FEATURES_REQUIRED += periph_rtt
+FEATURES_REQUIRED += periph_timer
+
+# Use automated advertising
+USEMODULE += nimble_autoadv
+CFLAGS += -DCONFIG_NIMBLE_AUTOADV_START_MANUALLY=1
 
 include $(RIOTBASE)/Makefile.include
 

@@ -1,14 +1,21 @@
 {
   "cSpell.words": [
+    "autoadv",
+    "devinfo",
     "Freie",
+    "gatts",
     "gpio",
+    "GPIOA",
     "HICHG",
     "Martine",
     "MOSI",
+    "Openshutter",
+    "preshoot",
     "QSPI",
     "SCLK",
     "Seeedstudio",
     "Seeeduino",
+    "svcs",
     "Universität",
     "VBAT",
     "xiao",
@@ -34,7 +41,19 @@
     "timex.h": "c",
     "periodic.h": "c",
     "periph_rtt.h": "c",
-    "config.h": "c"
+    "config.h": "c",
+    "pwm.h": "c",
+    "periph.h": "c",
+    "adc_params.h": "c",
+    "cpu.h": "c",
+    "ladybug-ble.h": "c",
+    "ble_hs.h": "c",
+    "ble_svc_gap.h": "c",
+    "ladybug_ble.h": "c",
+    "stdio.h": "c",
+    "timeout.h": "c",
+    "nimble_autoadv.h": "c",
+    "ad.h": "c"
   },
   "files.insertFinalNewline": true
 }

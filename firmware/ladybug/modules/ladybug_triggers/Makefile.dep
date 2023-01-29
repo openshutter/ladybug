@@ -1,3 +1,6 @@
-FEATURES_REQUIRED += periph_gpio
-USEMODULE += shell
-USEMODULE += ztimer ztimer_usec ztimer_extend
+ifneq (,$(filter ladybug_triggers,$(USEMODULE))) # if module in USEMODULE
+  FEATURES_REQUIRED += periph_gpio
+  FEATURES_REQUIRED += openshutter_board_pins
+  USEMODULE += shell
+  USEMODULE += ztimer ztimer_usec ztimer_extend
+endif

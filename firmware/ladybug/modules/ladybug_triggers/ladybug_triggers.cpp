@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "triggers.h"
+#include "ladybug_triggers.h"
 
 #include "board.h"
 #include "periph/gpio.h"
@@ -11,13 +11,13 @@
 #include "ztimer.h"
 
 /**
- * Fires a trigger in a typical half-press -> full-press sequence
+ * Blocks and fires a trigger in a typical half-press -> full-press sequence
  *
  * @param trigger trigger index to fire
  * @param duration miliseconds to fire TRGn_TIP
  * @param preshoot miliseconds to fire TRGn_RING before TRGn_TIP
  */
-int trigger(int trigger = 0, int duration = 250, int preshoot = 0) {
+int trigger_sync(int trigger = 0, int duration = 250, int preshoot = 0) {
   if (trigger != 0) {
     printf("Only one trigger supported at this time!");
     return -1;
@@ -55,13 +55,13 @@ int trigger(int trigger = 0, int duration = 250, int preshoot = 0) {
 }
 
 /**
- * Fires just TRGn_RING ("half-press" / preshoot).
+ * Blocks and fires just TRGn_RING ("half-press" / preshoot).
  * Caller is responsible for ensuring TRGn_TIP is overlapped with this pulse
  *
  * @param trigger trigger index to fire
  * @param duration miliseconds to fire TRGn_RING
  */
-int trigger_ring(int trigger = 0, int duration = 250) {
+int trigger_ring_sync(int trigger = 0, int duration = 250) {
   if (trigger != 0) {
     printf("Only one trigger supported at this time!");
     return -1;
@@ -82,12 +82,12 @@ int trigger_ring(int trigger = 0, int duration = 250) {
 }
 
 /**
- * Fires just TRGn_TIP ("full-press" / shoot)
+ * Blocks and fires just TRGn_TIP ("full-press" / shoot)
  *
  * @param trigger trigger index to fire
  * @param duration miliseconds to fire TRGn_TIP
  */
-int trigger_tip(int trigger = 0, int duration = 250) {
+int trigger_tip_sync(int trigger = 0, int duration = 250) {
   if (trigger != 0) {
     printf("Only one trigger supported at this time!");
     return -1;
@@ -119,12 +119,12 @@ static int trigger_cli(int argc, char **argv) {
   }
 
   if (argc == 1) {
-    ( void ) trigger(0, 250, 500);
+    ( void ) trigger_sync(0, 250, 500);
   }
   if (argc == 3) {
-    ( void ) trigger(0, atoi(argv[1]), atoi(argv[2]));
+    ( void ) trigger_sync(0, atoi(argv[1]), atoi(argv[2]));
   }
   return 0;
 }
 // Register our shell command
-SHELL_COMMAND(trigger, "Trigger Control", trigger_cli);
+SHELL_COMMAND(trigger_sync, "Trigger Control", trigger_cli);

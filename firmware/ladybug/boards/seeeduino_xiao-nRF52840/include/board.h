@@ -25,8 +25,8 @@
 
   #include "board_common.h"
   #include "cpu.h"
-  #include "periph/gpio.h"
   #include "periph/adc.h"
+  #include "periph/gpio.h"
 
   #ifdef __cplusplus
 extern "C" {
@@ -36,6 +36,8 @@ extern "C" {
  * @name    GPIO Pin Mapping
  * @{
  */
+
+  #define GPIOA_BASE (0x0u)
 
   // D0 .. D13
   #define PIN_D0  GPIO_PIN(0, 2)     // D0  is P0.02 (A0)
@@ -70,7 +72,6 @@ extern "C" {
   #define PIN_D11 GPIO_PIN(0, 26)    // D11 is P0.26 (LED RED)
   #define PIN_D12 GPIO_PIN(0, 6)     // D12 is P0.06 (LED BLUE)
   #define PIN_D13 GPIO_PIN(0, 30)    // D13 is P0.30 (LED GREEN)
-  #define PIN_D14 GPIO_PIN(0, 14)    // D14 is P0.14 (READ_BAT)
 
   // LSM6DS3TR
   #define PIN_D15 GPIO_PIN(1, 8)     // D15 is P1.08 (6D_PWR)
@@ -83,9 +84,11 @@ extern "C" {
   #define PIN_D20 GPIO_PIN(1, 0)     // 26,//32,   // D20 is P1.00 (PDM_CLK)
   #define PIN_D21 GPIO_PIN(0, 16)    // 25,//16,   // D21 is P0.16 (PDM_DATA)
 
-  // BQ25100
+  // BQ25100 - Battery & Charge Control
   #define PIN_D22 GPIO_PIN(0, 13)    // D22 is P0.13 (HICHG)
-  #define PIN_D23 GPIO_PIN(0, 17)    // D23 is P0.17 (~CHG)
+  #define PIN_D23 GPIO_PIN(0, 17)    // D23 is P0.17 (~CHG) - Active when charging
+  #define PIN_D14 GPIO_PIN(0, 14)    // D14 is P0.14 (READ_BAT) - Active Low
+  #define PIN_A7  GPIO_PIN(0, 31)    // Battery Sample ADC
 
   // QSPI
   #define PIN_D24       GPIO_PIN(0, 21)    // D24 is P0.21 (QSPI_SCK)
@@ -106,10 +109,6 @@ extern "C" {
   #define PIN_D31  GPIO_PIN(0, 10)    // D31 is P0.10 (NFC2)
   #define PIN_NFC1 PIN_D30
   #define PIN_NFC2 PIN_D31
-
-  // VBAT
-  #define PIN_D32  GPIO_PIN(0, 10)    // D32 is P0.10 (VBAT)
-  #define PIN_VBAT PIN_D32
 
 /** @} */
 
@@ -153,6 +152,17 @@ extern "C" {
   /** @brief Toggle green LED */
   #define LED2_TOGGLE gpio_toggle(LED2_PIN)
 
+/** @} */
+
+
+/**
+ * @name  Battery access pins / adc config
+ * @{
+ */
+  #define BAT_READ_ENABLE    PIN_D14
+  #define BAT_ADC_LINE       7
+  #define BAT_MV_PER_LSB     (0.87891)
+  #define BAT_ADC_RESOLUTION ADC_RES_12BIT
 /** @} */
 
   #ifdef __cplusplus

@@ -1,10 +1,5 @@
 RIOTBASE ?= $(CURDIR)/../../../../RIOT
-RIOTBOARD ?= $(RIOTBASE)/boards
-
-ifneq (,$(filter saul_default,$(USEMODULE)))
-  USEMODULE += saul_gpio
-endif
 
 # include common nrf52 dependencies
-include $(RIOTBOARD)/common/nrf52/bootloader_nrfutil.dep.mk
-include $(RIOTBOARD)/common/nrf52/Makefile.dep
+include $(RIOTBASE)/boards/common/nrf52/bootloader_nrfutil.dep.mk
+include $(RIOTBASE)/boards/common/nrf52/Makefile.dep

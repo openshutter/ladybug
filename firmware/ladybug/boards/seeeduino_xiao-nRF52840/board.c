@@ -7,9 +7,7 @@
  * @}
  */
 
-#ifndef BOARD_H
-  #include "board.h"
-#endif
+#include "board.h"
 
 void board_init(void) {
   // leds off at startup

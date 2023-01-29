@@ -1,0 +1,10 @@
+ifneq (,$(filter ladybug_ble,$(USEMODULE))) # if module in USEMODULE
+  EXTERNAL_MODULE_DIRS += $(CURDIR)/
+  USEMODULE += ladybug_triggers
+  USEMODULE += ztimer ztimer_usec ztimer_extend
+  # bluetooth stuff
+  USEPKG += nimble
+  USEMODULE += nimble_svc_gap
+  USEMODULE += nimble_svc_gatt
+  USEMODULE += nimble_autoadv
+endif

@@ -1,2 +1,3 @@
 FEATURES_REQUIRED += periph_adc
+FEATURES_REQUIRED += openshutter_board_pins
 USEMODULE += shell

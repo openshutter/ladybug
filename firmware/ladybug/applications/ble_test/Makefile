@@ -40,6 +40,9 @@ DEVELHELP ?= 1
 # Change this to 0 show compiler invocation lines by default:
 QUIET ?= 1
 
+# hardware specific
+USEMODULE += seeeduino_xiao-nRF52840_battery
+
 # Modules to include:
 USEMODULE += shell
 USEMODULE += shell_cmds_default
@@ -52,12 +55,11 @@ USEMODULE += saul_default
 # shell test commands
 USEMODULE += shell_gpio
 USEMODULE += shell_adc
-
 USEMODULE += shell_discomode
 
+# ladybug software
 USEMODULE += ladybug_ble
 USEMODULE += ladybug_triggers
-USEMODULE += ladybug_battery
 
 # we're using cpp in a few spots
 FEATURES_REQUIRED += cpp

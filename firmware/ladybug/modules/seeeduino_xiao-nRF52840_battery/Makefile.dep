@@ -1,0 +1,3 @@
+FEATURES_REQUIRED += periph_adc
+FEATURES_REQUIRED += seeeduino_xiao-nRF52840_battery_pins
+USEMODULE += shell

@@ -31,20 +31,20 @@
 #include "periph/gpio.h"
 // #include "periph_conf.h"
 #include "shell.h"
-// #include "thread.h"
+#include "thread.h"
 // #include "timex.h"
 // #include "ztimer/config.h"
 #include "ztimer.h"
+
+char discomode_thread_stack[THREAD_STACKSIZE_DEFAULT];
 
 
 static void delay(void) {
   ztimer_sleep(ZTIMER_USEC, 50000);
 }
 
-static int disco(int argc, char **argv) {
-  ( void ) argc;
-  ( void ) argv;
-
+void *discomode_thread(void *arg) {
+  ( void ) arg;
   int pins[] = {
     PIN_D2, PIN_D3, PIN_D4, PIN_D5, PIN_D6,
   };
@@ -63,6 +63,24 @@ static int disco(int argc, char **argv) {
     }
     delay();
   };
+
+  return NULL;
+}
+
+static int disco(int argc, char **argv) {
+  ( void ) argc;
+  ( void ) argv;
+
+  thread_create(
+      discomode_thread_stack,
+      sizeof(discomode_thread_stack),
+      THREAD_PRIORITY_MAIN - 2,
+      THREAD_CREATE_STACKTEST,
+      discomode_thread,
+      NULL,
+      "discomode_thread");
+
+
   return 0;
 }
 

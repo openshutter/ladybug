@@ -1,0 +1,1 @@
+USEMODULE_INCLUDES += $(CURDIR)/../../../ladybug/modules/seeeduino_xiao-nRF52840_battery

@@ -1,4 +1,3 @@
-
 #ifndef LADYBUG_TRIGGERS_H
 #define LADYBUG_TRIGGERS_H
 

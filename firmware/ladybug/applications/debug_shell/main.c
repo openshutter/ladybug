@@ -28,22 +28,43 @@
 #include "shell.h"
 #include "thread.h"
 
-#ifdef MODULE_NETIF
-  #include "net/gnrc.h"
-  #include "net/gnrc/pktdump.h"
-#endif
+char ble_init_thread_stack[THREAD_STACKSIZE_SMALL];
+char shell_thread_stack[THREAD_STACKSIZE_MAIN];
+
+void *init_ble_handle(void *arg) {
+  ( void ) arg;
+  ( void ) init_ble();
+  return NULL;
+}
+
+void *shell_handle(void *arg) {
+  ( void ) arg;
+  char line_buf[SHELL_DEFAULT_BUFSIZE];
+  ( void ) shell_run(NULL, line_buf, SHELL_DEFAULT_BUFSIZE);
+  return NULL;
+}
+
 
 int main(void) {
-#ifdef MODULE_NETIF
-  gnrc_netreg_entry_t dump =
-      GNRC_NETREG_ENTRY_INIT_PID(GNRC_NETREG_DEMUX_CTX_ALL, gnrc_pktdump_pid);
-  gnrc_netreg_register(GNRC_NETTYPE_UNDEF, &dump);
-#endif
+  ( void ) puts("Welcome to Shutterbug!");
 
-  ( void ) puts("Welcome to RIOT!");
+  thread_create(
+      ble_init_thread_stack,
+      sizeof(ble_init_thread_stack),
+      THREAD_PRIORITY_MAIN - 1,
+      THREAD_CREATE_STACKTEST,
+      init_ble_handle,
+      NULL,
+      "ble_init_thread");
 
-  char line_buf[SHELL_DEFAULT_BUFSIZE];
-  shell_run(NULL, line_buf, SHELL_DEFAULT_BUFSIZE);
+  thread_create(
+      ble_init_thread_stack,
+      sizeof(shell_thread_stack),
+      THREAD_PRIORITY_MAIN - 1,
+      THREAD_CREATE_STACKTEST,
+      shell_handle,
+      NULL,
+      "shell_thread");
 
   return 0;
 }

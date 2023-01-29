@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "ladybug_ble.h"
+#include "seeeduino_xiao-nRF52840_battery.h"
 
 #include "assert.h"
 #include "event/timeout.h"
@@ -19,7 +20,6 @@
 #include "services/gap/ble_svc_gap.h"
 #include "services/gatt/ble_svc_gatt.h"
 
-int battery_level = 45;
 
 static const char *devinfo_manufacturer_name = CONFIG_DEVINFO_MANUFACTURER_NAME;
 static const char *devinfo_model_number      = CONFIG_DEVINFO_MODEL_NUMBER;
@@ -89,7 +89,7 @@ int ble_bas_handler(
 
   printf("[ble] [READ] battery level service: battery level value\n");
 
-  uint8_t level = battery_level; /* this battery will never drain :-) */
+  uint8_t level = battery_charge_level(); /* this battery will never drain :-) */
   int     res   = os_mbuf_append(ctxt->om, &level, sizeof(level));
   return (res == 0) ? 0 : BLE_ATT_ERR_INSUFFICIENT_RES;
 }

@@ -159,11 +159,11 @@ extern "C" {
  * @name  Battery access pins / adc config
  * @{
  */
-  #define BAT_READ_ENABLE_PIN       PIN_D14
+  #define BAT_READ_ENABLE_PIN   PIN_D14
   #define BAT_ADC_LINE          7
   #define BAT_CHARGE_STATUS_PIN PIN_D23
-  #define BAT_MV_PER_LSB        (3.51563F)    // 10-bit ADC with 3.6V input range
-  #define BAT_ADC_RESOLUTION    ADC_RES_10BIT
+  #define BAT_MV_PER_LSB        419.21734    // 12-bit ADC with 3.3V vref
+  #define BAT_ADC_RESOLUTION    ADC_RES_12BIT
 /** @} */
 
   #ifdef __cplusplus

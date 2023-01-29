@@ -15,9 +15,8 @@
  */
 float mv_to_percent(float mvolts) {
   mvolts = ( float ) mvolts;
- 
-  float batteryLevel = 0.0;
 
+  float batteryLevel = 0.0;
   if (mvolts >= 3000) {
     batteryLevel = 100;
   } else if (mvolts > 2900) {
@@ -43,12 +42,11 @@ int battery_adc_sample(void) {
   // in order to connect the battery to the adc
   gpio_init(BAT_READ_ENABLE_PIN, GPIO_OUT);
 
-  // pulse the pin low for a shake to clear the adc
-  gpio_clear(BAT_READ_ENABLE_PIN);
-  ztimer_sleep(ZTIMER_USEC, (100 * 1000));
-
-  // then set it high for our reading
+  // pulse the pin high for a shake to clear the adc
   gpio_set(BAT_READ_ENABLE_PIN);
+  ztimer_sleep(ZTIMER_USEC, (100 * 1000));
+  // then set it low for our reading
+  gpio_clear(BAT_READ_ENABLE_PIN);
 
 
   int sample = 0;
@@ -61,7 +59,7 @@ int battery_adc_sample(void) {
   sample = adc_sample(ADC_LINE(BAT_ADC_LINE), BAT_ADC_RESOLUTION);
 
   // Disable battery reads
-  gpio_clear(BAT_READ_ENABLE_PIN);
+  gpio_set(BAT_READ_ENABLE_PIN);
 
   return sample;
 }
@@ -73,7 +71,7 @@ int battery_charge_level(void) {
   int sample = battery_adc_sample();
 
   float sampleMv  = ( float ) sample * BAT_MV_PER_LSB;
-  float samplePer = mv_to_percent(sampleMv);
+  int samplePer = mv_to_percent(sampleMv);
   return samplePer;
 }
 
@@ -105,7 +103,7 @@ static int batteryinfo_cli(int argc, char **argv) {
   ( void ) argv;
 
   int   sample       = battery_adc_sample();
-  float sampleMv     = mv_to_percent(sample);
+  float sampleMv     = ( float ) sample * BAT_MV_PER_LSB;
   int   chargeStatus = battery_charge_status();
   int   chargeLevel  = battery_charge_level();
 
@@ -118,6 +116,7 @@ static int batteryinfo_cli(int argc, char **argv) {
     return -1;
   } else {
     printf("[bat] Raw ADC_LINE(%i): %i \n", BAT_ADC_LINE, sample);
+    printf("[bat] MV per ADC unit: %f \n", BAT_MV_PER_LSB);
     printf("[bat] Lipo mV: %f \n", sampleMv);
     printf("[bat] Charge Percentage: %d \n", chargeLevel);
     printf("[bat] Charge Status: %s \n", chargeText);

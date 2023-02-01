@@ -2,22 +2,22 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "ladybug_triggers.h"
-
 #include "board.h"
 #include "periph/gpio.h"
 #include "shell.h"
 
 #include "ztimer.h"
 
+#include "ladybug_triggers.h"
+
 /**
  * Blocks and fires a trigger in a typical half-press -> full-press sequence
  *
- * @param trigger trigger index to fire
- * @param duration miliseconds to fire TRGn_TIP
- * @param preshoot miliseconds to fire TRGn_RING before TRGn_TIP
+ * @param trigger sugg. 0 - trigger index to fire
+ * @param duration sugg. 250 - miliseconds to fire TRGn_TIP
+ * @param preshoot sugg. 250 - miliseconds to fire TRGn_RING before TRGn_TIP
  */
-int trigger_sync(int trigger = 0, int duration = 250, int preshoot = 0) {
+int trigger_sync(int trigger, int duration, int preshoot) {
   if (trigger != 0) {
     printf("Only one trigger supported at this time!");
     return -1;
@@ -61,7 +61,7 @@ int trigger_sync(int trigger = 0, int duration = 250, int preshoot = 0) {
  * @param trigger trigger index to fire
  * @param duration miliseconds to fire TRGn_RING
  */
-int trigger_ring_sync(int trigger = 0, int duration = 250) {
+int trigger_ring_sync(int trigger, int duration) {
   if (trigger != 0) {
     printf("Only one trigger supported at this time!");
     return -1;
@@ -87,7 +87,7 @@ int trigger_ring_sync(int trigger = 0, int duration = 250) {
  * @param trigger trigger index to fire
  * @param duration miliseconds to fire TRGn_TIP
  */
-int trigger_tip_sync(int trigger = 0, int duration = 250) {
+int trigger_tip_sync(int trigger, int duration) {
   if (trigger != 0) {
     printf("Only one trigger supported at this time!");
     return -1;

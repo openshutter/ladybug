@@ -1,0 +1,6 @@
+ifneq (,$(filter ladybug_gpio,$(USEMODULE))) # if module in USEMODULE
+  FEATURES_REQUIRED += periph_gpio
+	FEATURES_REQUIRED += openshutter_board_pins
+	USEMODULE += saul_gpio
+	USEMODULE += shell
+endif

@@ -1,3 +1,4 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -16,21 +17,11 @@
 float mv_to_percent(float mvolts) {
   mvolts = ( float ) mvolts;
 
-  float batteryLevel = 0.0;
-  if (mvolts >= 3000) {
-    batteryLevel = 100;
-  } else if (mvolts > 2900) {
-    batteryLevel = 100 - ((3000 - mvolts) * 58) / 100;
-  } else if (mvolts > 2740) {
-    batteryLevel = 42 - ((2900 - mvolts) * 24) / 160;
-  } else if (mvolts > 2440) {
-    batteryLevel = 18 - ((2740 - mvolts) * 12) / 300;
-  } else if (mvolts > 2100) {
-    batteryLevel = 6 - ((2440 - mvolts) * 6) / 340;
-  } else {
-    batteryLevel = 0;
-  }
-  return batteryLevel;
+  // https://electronics.stackexchange.com/a/551667
+  // int percentage = round(100 + (6 - 120)/pow((1 + pow(mvolts/4.2, 170)), 0.0766));
+  // int percentage = round(123.0 - (123.0 / pow(1.0 + pow(mvolts / 4.2, 80.0), 0.165)));
+  int percentage = round(100 * (mvolts - 0) / (double) (4200 - 0));
+  return percentage;
 }
 
 /**
@@ -71,7 +62,7 @@ int battery_charge_level(void) {
   int sample = battery_adc_sample();
 
   float sampleMv  = ( float ) sample * BAT_MV_PER_LSB;
-  int samplePer = mv_to_percent(sampleMv);
+  int   samplePer = mv_to_percent(sampleMv);
   return samplePer;
 }
 
@@ -94,7 +85,6 @@ int battery_charge_status(void) {
   }
 }
 
-
 /**
  * CLI interface for battery information in shell
  */
@@ -102,10 +92,10 @@ static int batteryinfo_cli(int argc, char **argv) {
   ( void ) argc;
   ( void ) argv;
 
-  int   sample       = battery_adc_sample();
-  float sampleMv     = ( float ) sample * BAT_MV_PER_LSB;
-  int   chargeStatus = battery_charge_status();
-  int   chargeLevel  = battery_charge_level();
+  int sample       = battery_adc_sample();
+  int sampleMv     = sample * ( float ) BAT_MV_PER_LSB;
+  int chargeStatus = battery_charge_status();
+  int chargeLevel  = battery_charge_level();
 
   char chargeText[] = "Off";
   if (chargeStatus == 1) {
@@ -116,8 +106,7 @@ static int batteryinfo_cli(int argc, char **argv) {
     return -1;
   } else {
     printf("[bat] Raw ADC_LINE(%i): %i \n", BAT_ADC_LINE, sample);
-    printf("[bat] MV per ADC unit: %f \n", BAT_MV_PER_LSB);
-    printf("[bat] Lipo mV: %f \n", sampleMv);
+    printf("[bat] Lipo mV: %d \n", sampleMv);
     printf("[bat] Charge Percentage: %d \n", chargeLevel);
     printf("[bat] Charge Status: %s \n", chargeText);
     return 0;

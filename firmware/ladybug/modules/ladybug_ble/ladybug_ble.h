@@ -21,74 +21,29 @@
   #define CONFIG_DEVINFO_HW_VER
 #endif
 
-#define GATT_DEVICE_INFO_UUID       0x180A
-#define GATT_MANUFACTURER_NAME_UUID 0x2A29
-#define GATT_MODEL_NUMBER_UUID      0x2A24
+/**
+ * { "name": "Battery Service", "identifier": "org.bluetooth.service.battery_service", "uuid":
+ * "180F", "source": "gss" },
+ */
+#define BLE_GATT_SVC_battery_service (0x180F)
 
-// Overall service uuid
-// UUID = 2606839e-59c6-4074-8a40-d7950dac4467
-#define GATT_EXAMPLE_SVC_UUID \
-  BLE_UUID128_INIT(           \
-      0x67,                   \
-      0x44,                   \
-      0xac,                   \
-      0x0d,                   \
-      0x95,                   \
-      0xd7,                   \
-      0x40,                   \
-      0x8a,                   \
-      0x74,                   \
-      0x40,                   \
-      0xc6,                   \
-      0x59,                   \
-      0x9e,                   \
-      0x83,                   \
-      0x06,                   \
-      0x26)
+/**
+ * { "name": "Battery Level", "identifier":
+ * "org.bluetooth.characteristic.battery_level", "uuid": "2A19" , "source": "gss"},
+ */
+#define BLE_GATT_CHAR_battery_level (0x2A19)
 
+/**
+ * { "name": "Battery Power State", "identifier":
+ * "org.bluetooth.characteristic.battery_power_state", "uuid": "2A1A" , "source": "gss"},
+ */
+#define BLE_GATT_CHAR_battery_power_state (0x2A1A)
 
-// Write field uuid
-// UUID = c74d2ab1-14e1-49a6-9570-8c3f4a2127c3
-#define GATT_EXAMPLE_SVC_RW_UUID \
-  BLE_UUID128_INIT(              \
-      0xc3,                      \
-      0x27,                      \
-      0x21,                      \
-      0x4a,                      \
-      0x3f,                      \
-      0x8c,                      \
-      0x70,                      \
-      0x95,                      \
-      0xa6,                      \
-      0x49,                      \
-      0xe1,                      \
-      0x14,                      \
-      0xb1,                      \
-      0x2a,                      \
-      0x4d,                      \
-      0xc7)
-
-
-// Read field uuid
-// UUID = 09debdc4-050f-4111-993a-409752cb73a0
-#define GATT_EXAMPLE_SVC_RO_UUID \
-  BLE_UUID128_INIT(              \
-      0xa0,                      \
-      0x73,                      \
-      0xcb,                      \
-      0x52,                      \
-      0x97,                      \
-      0x40,                      \
-      0x3a,                      \
-      0x99,                      \
-      0x11,                      \
-      0x41,                      \
-      0x0f,                      \
-      0x05,                      \
-      0xc4,                      \
-      0xbd,                      \
-      0xde,                      \
-      0x09)
+/**
+ * Our ladybug services
+ */
+#define BLE_GATT_SVC_openshutter_triggers       (0xF000)
+#define BLE_GATT_CHAR_openshutter_trigger0_fire (0xF011)
 
 /**
  * Initializes BLE and starts advertising

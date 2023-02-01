@@ -14,25 +14,26 @@ typedef struct pwmpin {
 } PWMPIN;
 
 // yay lexical ordering!
-PWMPIN gpioTable[] = {
+PWMPIN pwmPinTable[] = {
   // A0 .. A5
-  { "A1", PIN_D1 }, { "A2", PIN_D2 }, { "A3", PIN_D3 }, { "A4", PIN_D4 }, { "A5", PIN_D5 },
+  { "A1", PIN_D1 }, { "A2", PIN_D2 },    { "A3", PIN_D3 },    { "A4", PIN_D4 },
+  { "A5", PIN_D5 }, { "LEDB", PIN_D12 }, { "LEDG", PIN_D13 }, { "LEDR", PIN_D11 },
 };
 
 static int compare_keys(const void *va, const void *vb) {
   const PWMPIN *a = va, *b = vb;
-  int            res = strcmp(a->key, b->key);
+  int           res = strcmp(a->key, b->key);
   // printf("strcmp(%s, %s) = %d\n", a->key, b->key, res);
   return res;
 }
 
-gpio_t get_pin(char *key) {
+gpio_t get_pwm_pin(char *key) {
   PWMPIN  key_pair[1] = { { key, 0 } };
-  PWMPIN *pwmpin     = bsearch(
+  PWMPIN *pwmpin      = bsearch(
       key_pair,
-      gpioTable,
-      sizeof gpioTable / sizeof gpioTable[0],
-      sizeof gpioTable[0],
+      pwmPinTable,
+      sizeof pwmPinTable / sizeof pwmPinTable[0],
+      sizeof pwmPinTable[0],
       compare_keys);
   return pwmpin ? pwmpin->pin : PWM_UNDEF;
 }
@@ -46,7 +47,7 @@ static int pwm_control(int argc, char **argv) {
   }
 
   // Fetch GPIO pin reference based on argument given
-  gpio_t pin = get_pin(argv[2]);
+  gpio_t pin = get_pwm_pin(argv[2]);
   if (pin == GPIO_UNDEF) {
     printf("Invalid pin provided\n");
     return -1;

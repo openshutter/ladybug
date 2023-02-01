@@ -7,7 +7,6 @@
 #include "periph/gpio.h"
 #include "shell.h"
 
-
 typedef struct gpiopin {
   char  *key;
   gpio_t pin;
@@ -60,8 +59,9 @@ static int compare_keys(const void *va, const void *vb) {
 }
 
 gpio_t get_pin(char *key) {
-  GPIOPIN  key_pair[1] = { { key, 0 } };
-  GPIOPIN *gpiopin     = bsearch(
+  GPIOPIN key_pair[1] = { { key, 0 } };
+
+  GPIOPIN *gpiopin = bsearch(
       key_pair,
       gpioTable,
       sizeof gpioTable / sizeof gpioTable[0],
@@ -70,7 +70,7 @@ gpio_t get_pin(char *key) {
   return gpiopin ? gpiopin->pin : GPIO_UNDEF;
 }
 
-static int gpio_control(int argc, char **argv) {
+static int lb_gpio_cli(int argc, char **argv) {
   // Check number of arguments passed
   if (!(argc == 3 || argc == 4)) {
     printf("Invalid # of arguments\n");
@@ -145,4 +145,4 @@ static int gpio_control(int argc, char **argv) {
 }
 
 // Register our shell command
-SHELL_COMMAND(gpio, "GPIO Control", gpio_control);
+SHELL_COMMAND(gpio, "GPIO Control", lb_gpio_cli);

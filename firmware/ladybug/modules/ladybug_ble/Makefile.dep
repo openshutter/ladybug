@@ -1,6 +1,7 @@
 ifneq (,$(filter ladybug_ble,$(USEMODULE))) # if module in USEMODULE
   USEMODULE += seeeduino_xiao-nRF52840_battery
   USEMODULE += ladybug_triggers
+  # USEMODULE += ladybug_gpio
 
   USEMODULE += ztimer ztimer_usec ztimer_extend
   # bluetooth stuff
@@ -9,4 +10,7 @@ ifneq (,$(filter ladybug_ble,$(USEMODULE))) # if module in USEMODULE
   USEMODULE += nimble_svc_gatt
   USEMODULE += nimble_autoadv
   USEMODULE += nimble_phy_coded
+
+  # Use automated advertising
+  USEMODULE += nimble_autoadv
 endif
